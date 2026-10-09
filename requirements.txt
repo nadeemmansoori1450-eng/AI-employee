@@ -4,9 +4,12 @@ google-api-python-client>=2.120.0
 google-auth-oauthlib>=1.2.0
 google-auth-httplib2>=0.2.0
 python-dotenv>=1.0.1
-fastapi>=0.110.0
-uvicorn>=0.27.1
-openai>=1.14.0
-requests>=2.31.0
+fastapi
+uvicorn
 groq
-sounddevice
+crewai
+numpy
+scipy
+python-dotenv
+pydantic
+requests
