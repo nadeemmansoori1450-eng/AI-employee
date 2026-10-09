@@ -1,6 +1,5 @@
 import os
 import threading
-import sounddevice as sd
 import numpy as np
 import scipy.io.wavfile as wav
 from groq import Groq
@@ -8,12 +7,21 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Safe import for cloud servers (Render/Vercel) where sounddevice/PortAudio might be missing
+try:
+    import sounddevice as sd
+except (ImportError, OSError):
+    sd = None
+
 class RecorderAgent:
     def __init__(self):
         self.client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
     def record_and_transcribe(self, output_filename="temp_meeting.wav"):
         """Records audio from microphone until the user presses Enter, then transcribes via Groq Whisper."""
+        if sd is None:
+            raise RuntimeError("Sounddevice (PortAudio) is not available on this cloud environment. Live recording should be handled on the client-side browser.")
+
         fs = 44100  # Sample rate
         channels = 1
         audio_data = []
