@@ -1,0 +1,4 @@
+.env
+credentials/token.pickle
+__pycache__/
+node_modules/
